@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 应用创建之后记得加到这里
+    'app01'
 ]
 
 MIDDLEWARE = [
@@ -49,12 +51,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# 指定根路径
 ROOT_URLCONF = 'djangostart.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # 修改此处，让Django到这里的目录找html模板文件
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,6 +77,7 @@ WSGI_APPLICATION = 'djangostart.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# 数据库相关配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -103,9 +108,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+# 后台使用的语言
+# LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
-TIME_ZONE = 'UTC'
+# 使用的时区
+# TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -117,4 +126,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'  # 用来匹配查找
+STATICFILES_DIRS = [
+    # 用来查找配置的目录
+    os.path.join(BASE_DIR, 'static')
+]
+# STATIC_URL是指引用名，不是具体的目录，HTML文件中静态文件名字需要与它对应, 表示哪种文件会被识别成静态文件
+# STATICFILES_DIR去这里配置的目录下找静态文件(注意此处为list or tuple否则加载静态文件会报错)
